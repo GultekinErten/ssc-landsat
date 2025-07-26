@@ -1,58 +1,15 @@
-
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environment
-.venv/
-env/
-venv/
-ENV/
-env.bak/
-*.env
-
-# Jupyter Notebook checkpoints
-.ipynb_checkpoints
-
-# VSCode and PyCharm directories
-.vscode/
-.idea/
-
-# MacOS and Linux files
-.DS_Store
-Thumbs.db
-
-# Logs and temporary files
+# Ignore temporary and system files
 *.log
 *.tmp
-*.bak
+.DS_Store
+__pycache__/
+*.pyc
 
-# Test results
-coverage.xml
-*.cover
-*.py,cover
+# Ignore large raw data or model files except important folders
+# Remove the lines below to allow data and Outputs to be tracked
+# *.tif
+# *.pkl
+# *.csv
+# Outputs/
+# data/
 
-# mypy and pylint
-.mypy_cache/
-.pylint.d/
-
-# Build artifacts
-build/
-dist/
-*.egg-info/
-
-# Geemap temp files
-geemap/
-
-# Output prediction files
-Outputs/
-*.tif
-
-# Data
-*.csv
-*.zip
-*.tar.gz
-*.hdf
-*.nc
-*.dat
