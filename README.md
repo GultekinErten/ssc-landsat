@@ -113,6 +113,23 @@ python scripts/metrics.py \
   --thresholds 1000
 ```
 
+> thresholds: (optional) SSC (mg/L) threshold(s) to split the dataset and evaluate model performance separately for low and high sediment concentration conditions.   For example, `--thresholds 1000` computes metrics separately for samples with SSC ≤1000 mg/L and SSC >1000 mg/L.   This helps identify if the model performs better for cleaner vs. more turbid waters.
+
+
+## Output Metrics
+
+| Metric       | Description                          |
+|--------------|--------------------------------------|
+| `R2`         | Coefficient of determination          |
+| `RMSE`       | Root Mean Square Error               |
+| `MAE`        | Mean Absolute Error                  |
+| `CVRMSE`     | Coeff. of Variation of RMSE          |
+| `NSE`        | Nash–Sutcliffe Efficiency            |
+| `KGE`        | Kling–Gupta Efficiency               |
+| `MAPE`       | Mean Absolute Percentage Error       |
+| `RRMSE`      | Relative RMSE                        |
+
+
 ---
 
 
@@ -130,19 +147,6 @@ python scripts/landsat_downloader.py \
 
 > Generates and downloads monthly Landsat mosaics (L5, L7, L8, L9) for given regions using Earth Engine.
 
-
-## Output Metrics
-
-| Metric       | Description                          |
-|--------------|--------------------------------------|
-| `R2`         | Coefficient of determination          |
-| `RMSE`       | Root Mean Square Error               |
-| `MAE`        | Mean Absolute Error                  |
-| `CVRMSE`     | Coeff. of Variation of RMSE          |
-| `NSE`        | Nash–Sutcliffe Efficiency            |
-| `KGE`        | Kling–Gupta Efficiency               |
-| `MAPE`       | Mean Absolute Percentage Error       |
-| `RRMSE`      | Relative RMSE                        |
 
 ---
 
