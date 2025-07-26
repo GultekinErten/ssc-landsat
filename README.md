@@ -90,6 +90,8 @@ python scripts/precip_merge.py \
   --windows 3 7 15
 ```
 
+> windows specifies the number of days over which precipitation will be averaged or summed for each sample. For example, --windows 3 7 15 will calculate cumulative precipitation over the previous 3, 7, and 15 days for each SSC observation date. These become additional input features for the ML models.
+
 ---
 
 ### 5. Train CatBoost Models (raw & ln)
