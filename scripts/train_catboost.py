@@ -32,10 +32,11 @@ from sklearn.model_selection import train_test_split
 
 def load_data(csv_path):
     df = pd.read_csv(csv_path)
-    df = df[df['ssc'] < 1000].copy()
+    df = df[df['ssc'] < 131000].copy()
     df['B3_B2'] = df['SR_B3'] / df['SR_B2']
+    df['NDWI'] = (df['SR_B2'] - df['SR_B5'])/(df['SR_B2'] + df['SR_B5'])
     df['ln_ssc'] = np.log(df['ssc'])
-    features = ['B3_B2', 'filled', 'lon', 'SR_B3', 'SR_B4', 'lat', 'month']
+    features = ['B3_B2', 'filled', 'lon', 'SR_B3', 'SR_B4', 'lat', 'month', 'NDWI']
     X = df[features].apply(pd.to_numeric, errors='coerce')
     y_direct = df['ssc']
     y_ln = df['ln_ssc']
@@ -98,9 +99,19 @@ def main(args):
     print("✅ Models trained and saved successfully.")
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train CatBoost models for SSC and ln(SSC).")
-    parser.add_argument("--input_csv", type=str, required=True, help="Path to input CSV file.")
-    parser.add_argument("--model_dir", type=str, required=True, help="Directory to save .pkl models.")
-    parser.add_argument("--log_dir", type=str, required=True, help="Directory for CatBoost training logs.")
-    args = parser.parse_args()
-    main(args)
+    try:
+        get_ipython  # Spyder ortamında çalışıyorsanız buraya girer
+        args = argparse.Namespace(
+            input_csv="/media/gultekin-erten/Yeni Birim/ssc/version_10/csv/with_precip.csv",
+            model_dir="/media/gultekin-erten/Yeni Birim/ssc/version_10/models",
+            log_dir="/media/gultekin-erten/Yeni Birim/ssc/version_10/models/catboost_logs"
+        )
+        main(args)
+    except NameError:
+        parser = argparse.ArgumentParser(description="Train CatBoost models for SSC and ln(SSC).")
+        parser.add_argument("--input_csv", type=str, required=True, help="Path to input CSV file.")
+        parser.add_argument("--model_dir", type=str, required=True, help="Directory to save .pkl models.")
+        parser.add_argument("--log_dir", type=str, required=True, help="Directory for CatBoost training logs.")
+        args = parser.parse_args()
+        main(args)
+

@@ -30,6 +30,18 @@ import os
 import argparse
 from tqdm import tqdm
 from datetime import datetime, timedelta
+import sys
+sys.argv = [
+    'landsat_downloader.py',
+    '--assets',
+    'projects/ee-gultekinerten/assets/Colorado',
+    '--roi_names',
+    'Colorado',
+    '--start_date', '1984-01-01',
+    '--end_date', '2025-12-31',
+    '--cloud_filter', '100',
+    '--output_dir', '/media/gultekin-erten/Yeni Birim/ssc/version_10/inputs'
+]
 
 # ----------------------------- Argument Parser -----------------------------
 parser = argparse.ArgumentParser(
@@ -67,10 +79,10 @@ landsat_collections = {
 }
 
 bands_dict = {
-    "L5": ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5'],
-    "L7": ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5'],
-    "L8": ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6'],
-    "L9": ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6']
+    "L5": ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'QA_PIXEL'],
+    "L7": ['SR_B1', 'SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'QA_PIXEL'],
+    "L8": ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'QA_PIXEL'],
+    "L9": ['SR_B2', 'SR_B3', 'SR_B4', 'SR_B5', 'SR_B6', 'QA_PIXEL']
 }
 
 # ------------------------------ Helper Functions ------------------------------

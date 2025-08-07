@@ -37,6 +37,14 @@ import lightgbm as lgb
 import xgboost as xgb
 from catboost import CatBoostRegressor
 
+def main(args):
+    print("Data path:", args.data)
+    print("Output path:", args.output)
+    print("Test size:", args.test_size)
+    print("Thresholds:", args.thresholds)
+    run_training(args.data, args.output, args.test_size, args.thresholds)
+
+
 
 def evaluate(y_true, y_pred):
     """
@@ -85,6 +93,7 @@ def run_training(data_path, output_csv, test_size, thresholds):
         df = pd.read_csv(data_path)
         df = df[df['ssc'] < limit]
         df['B3_B2'] = df['SR_B3'] / df['SR_B2']
+        df['NDWI'] = df['SR_B2'] / df['SR_B5']
         df = df.dropna(subset=['SR_B2', 'ssc', 'SR_B3', 'SR_B4', 'filled', 'lon', 'lat', 'month'])
         df['ln_ssc'] = np.log(df['ssc'])
 
@@ -132,18 +141,21 @@ def run_training(data_path, output_csv, test_size, thresholds):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Train multiple ML models on SSC data with various thresholds.")
-    parser.add_argument("--data", type=str, required=True, help="Path to input CSV file.")
-    parser.add_argument("--output", type=str, required=True, help="Path to save results CSV.")
-    parser.add_argument("--test_size", type=float, default=0.2, help="Test set ratio. Default is 0.2")
-    parser.add_argument("--thresholds", type=int, nargs='+', default=[8000, 4000, 1000, 500],
-                        help="List of SSC thresholds (mg/L). Default: 8000 4000 1000 500")
+    try:
+        get_ipython  # Spyder'da çalışıyorsan buraya girer
+        args = argparse.Namespace(
+            data="/media/gultekin-erten/Yeni Birim/ssc/version_10/csv/with_precip.csv",
+            output="/media/gultekin-erten/Yeni Birim/ssc/version_10/Outputs/metrics_report.csv",
+            test_size=0.2,
+            thresholds=[500, 1000, 2000]
+        )
+    except NameError:
+        parser = argparse.ArgumentParser(description="Evaluate SSC predictions with multiple metrics.")
+        parser.add_argument("--data", required=True, help="Path to merged prediction CSV file")
+        parser.add_argument("--output", required=True, help="Path to save metrics output CSV")
+        parser.add_argument("--test_size", type=float, default=0.2, help="Test split ratio (default=0.2)")
+        parser.add_argument("--thresholds", type=int, nargs="+", default=[500, 1000, 2000], help="Error thresholds in mg/L")
+        args = parser.parse_args()
 
-    args = parser.parse_args()
+    main(args)
 
-    run_training(
-        data_path=args.data,
-        output_csv=args.output,
-        test_size=args.test_size,
-        thresholds=args.thresholds
-    )
