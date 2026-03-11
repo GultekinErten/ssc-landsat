@@ -187,7 +187,7 @@ This project is licensed under the [MIT License](LICENSE.txt).
 **Gültekin Erten**  
 Remote Sensing & Environmental Modeling  
 MTA – General Directorate of Mineral Research and Exploration, Türkiye  
-Contact: (add your email or GitHub Issues link)
+Contact: (gultekinerten@gmail.com)
 
 ---
 
@@ -197,3 +197,4 @@ Contact: (add your email or GitHub Issues link)
 - [ ] Sentinel-2 support  
 - [ ] Deployment via web interface  
 - [ ] Transfer learning to other countries
+
